@@ -4,7 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    read.cpp
+    read.cpp \
+    print.cpp
 
 HEADERS += \
     classi.hpp

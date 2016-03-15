@@ -27,6 +27,7 @@ private:
     int N_col=0;
 public:
     sparse_matrix(std::string input);
+    void print();
 };
 
 #endif // CLASSI_HPP

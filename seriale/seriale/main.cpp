@@ -3,9 +3,9 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
+int main()
 {
-    point a(5,6,1);
-    cout << a.get_row()<<" "<<a.get_col()<<" "<<a.get_car() << endl;
+    sparse_matrix DATA("problem.csv");
+    DATA.print();
     return 0;
 }

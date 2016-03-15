@@ -47,6 +47,7 @@ sparse_matrix::sparse_matrix(string input){
     //altre righe
     while(getline(f,s)){
         row=row+1;
+        col=0;
         for(auto it=s.begin();it<s.end();it++){
             value=atoi(&(*it));
             if(value==1 || value==2){
