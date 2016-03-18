@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     read.cpp \
-    print.cpp
+    print.cpp \
+    update.cpp
 
 HEADERS += \
     classi.hpp
