@@ -1,24 +1,13 @@
 #ifndef CLASSI_HPP
 #define CLASSI_HPP
 
-#include <vector>
+
 #include<string>
+#include<map>
 
+typedef typename std::map<int,int> ROW;
 
-
-class point{
-private:
-    int row;
-    int col;
-    int car;
-public:
-    point(int _row, int _col, int _car) : row(_row), col(_col), car(_car) {};
-    int get_row(){return row;};
-    int get_col(){return col;}
-    int get_car(){return car;}
-};
-
-typedef std::vector<point> MATRIX;
+typedef typename std::map<int,ROW> MATRIX;
 
 class sparse_matrix{
 private:

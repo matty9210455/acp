@@ -24,12 +24,22 @@ sparse_matrix::sparse_matrix(string input){
 
     //prima riga
     getline(f,s);
+    bool first=true;
+    MATRIX::iterator last_row ;
     for(auto it=s.begin();it<s.end();it++){
-
         value=atoi(&(*it));
+        ROW::iterator last_el;
         if(value==1 || value==2){
-           point aux(row,col,value);
-           A.push_back(aux);
+           if(first){
+               ROW aux;
+               aux.insert(make_pair(col,value));
+               A.insert(make_pair(row,aux));
+               last_row=A.end();
+               last_row--;
+               first=false;
+           }else{
+           last_row->second.insert(make_pair(col,value));
+           }
         }else{
            if(value!=0){
                 cout<<"dato anomalo"<<endl;
@@ -48,11 +58,20 @@ sparse_matrix::sparse_matrix(string input){
     while(getline(f,s)){
         row=row+1;
         col=0;
+        first=true;
         for(auto it=s.begin();it<s.end();it++){
             value=atoi(&(*it));
             if(value==1 || value==2){
-               point aux(row,col,value);
-               A.push_back(aux);
+                if(first){
+                    ROW aux;
+                    aux.insert(make_pair(col,value));
+                    A.insert(make_pair(row,aux));
+                    last_row=A.end();
+                    last_row--;
+                    first=false;
+                }else{
+                    last_row->second.insert(make_pair(col,value));
+                }
             }else{
                if(value!=0){
                     cout<<"dato anomalo"<<endl;
