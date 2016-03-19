@@ -15,7 +15,7 @@ void sparse_matrix::update(int N_iteration){
             next_row++;
             //controllo quali blu spostare
             for(it_matrix;it_matrix!=end_matrix;it_matrix++){
-
+                if(next_row==end_matrix) next_row=A.begin();
                 const ROW::iterator end_row=it_matrix->second.end();
                 const ROW::iterator end_next_row=next_row->second.end();
                 ROW::iterator el=it_matrix->second.begin();
