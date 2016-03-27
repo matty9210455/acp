@@ -10,7 +10,7 @@ CXXFLAGS = -O3 -march=native -Wall -Wextra -std=c++11 -I$(INCLUDE_DIR)
 # PUT HERE THE FOLDER WITH YOUR HEADER FILES, IF ANY
 # FOR EXAMPLE:
 # INCLUDE_DIR = include
-INCLUDE_DIR = ./seriale
+INCLUDE_DIR = FILE
 
 # PUT HERE THE PATH TO YOUR HEADER FILES TO CORRECTLY RECOMPILE AT ANY CHANGE
 # FOR EXAMPLE:
@@ -24,7 +24,7 @@ DEPS = $(INCLUDE_DIR)/*.hpp*
 # PUT HERE THE FOLDER WITH YOUR SOURCe FILES
 # FOR EXAMPLE:
 # SRC = src
-SRC = seriale
+SRC = FILE
 
 # FOR EVERY VERSION OF THE PROGRAM, PUT HERE THE LIST OF SOURCE FILES TO BE COMPILED
 # FOR EXAMPLE
@@ -32,7 +32,7 @@ SRC = seriale
 # OMP_SRC = $(SRC)/main_omp.cpp
 # MPI_SRC = $(SRC)/main_mpi.cpp
 
-SERIAL_SRC = $(SRC)/main.cpp
+SERIAL_SRC = $(SRC)/main.cpp $(SRC)/read.cpp $(SRC)/print.cpp $(SRC)/update.cpp
 
 
 #####################################################
