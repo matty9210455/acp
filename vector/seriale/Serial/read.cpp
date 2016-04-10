@@ -49,7 +49,7 @@ MATRIX::MATRIX(string input){
                first_el=false;
 
             }else{
-               (--data.end())->add_element(aux_p);
+               (--data.end())->push_back(aux_p);
             }
 
         }else{
@@ -82,7 +82,7 @@ MATRIX::MATRIX(string input){
                 }else{
                     auto last_row=--data.end();
                 if(last_row->Get_n_row()==row){
-                   (last_row)->add_element(aux_p);
+                   (last_row)->push_back(aux_p);
                }else{
                    ROW aux_r(aux_p, row);
                    data.push_back(aux_r);

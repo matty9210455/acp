@@ -18,10 +18,11 @@ private:
     int n_row;
 public:
     ROW(POINT p, int _n_row);
-    void add_element(POINT p){_row.push_back(p);};
+    void push_back(POINT p){_row.push_back(p);};
     int Get_n_row(){return n_row;}
     ROW_iterator begin(){return _row.begin();};
     ROW_iterator end() {return _row.end();};
+    void add_element_front(int col, int car);
 };
 
 typedef typename std::vector< ROW >::iterator MATRIX_iterator ;
@@ -35,6 +36,7 @@ private:
 public:
     MATRIX(std::string input);
     void print();
+    void update(int iteraction);
 };
 
 #endif // CLASS_HPP

@@ -50,10 +50,12 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../Serial/main.cpp \
 		../Serial/read.cpp \
-		../Serial/print.cpp 
+		../Serial/print.cpp \
+		../Serial/update.cpp 
 OBJECTS       = main.o \
 		read.o \
-		print.o
+		print.o \
+		update.o
 DIST          = ../../../../Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.6/gcc_64/mkspecs/common/unix.conf \
 		../../../../Qt/5.6/gcc_64/mkspecs/common/linux.conf \
@@ -184,7 +186,8 @@ DIST          = ../../../../Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.6/gcc_64/mkspecs/features/lex.prf \
 		../Serial/Serial.pro class.hpp ../Serial/main.cpp \
 		../Serial/read.cpp \
-		../Serial/print.cpp
+		../Serial/print.cpp \
+		../Serial/update.cpp
 QMAKE_TARGET  = Serial
 DESTDIR       = 
 TARGET        = Serial
@@ -503,6 +506,9 @@ read.o: ../Serial/read.cpp ../Serial/class.hpp
 
 print.o: ../Serial/print.cpp ../Serial/class.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o print.o ../Serial/print.cpp
+
+update.o: ../Serial/update.cpp ../Serial/class.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o update.o ../Serial/update.cpp
 
 ####### Install
 
