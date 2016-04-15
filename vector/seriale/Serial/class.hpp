@@ -22,6 +22,7 @@ public:
     ROW_iterator begin(){return _row.begin();};
     ROW_iterator end() {return _row.end();};
     void add_element_front(int col, int car);
+    void erase(ROW_iterator p){_row.erase(p);}
 };
 
 

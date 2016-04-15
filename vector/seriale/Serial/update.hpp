@@ -5,7 +5,6 @@
 struct POINT_CHANGE{
     int row;
     int col;
-    int car;
 
 };
 
