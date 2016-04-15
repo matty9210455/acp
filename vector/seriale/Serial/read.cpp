@@ -10,9 +10,8 @@ POINT::POINT(int _col, int _car){
     car=_car;
 }
 
-ROW::ROW(POINT p, int _n_row){
+ROW::ROW(POINT p){
     _row.push_back(p);
-    n_row=_n_row;
 }
 
 MATRIX::MATRIX(string input){
@@ -44,12 +43,12 @@ MATRIX::MATRIX(string input){
             POINT aux_p(col, value);
 
             if(first_el){
-               ROW aux_r(aux_p, row);
-               data.push_back(aux_r);
+               ROW aux_r(aux_p);
+               data.insert(make_pair(row,aux_r));
                first_el=false;
 
             }else{
-               (--data.end())->push_back(aux_p);
+               (--data.end())->second.push_back(aux_p);
             }
 
         }else{
@@ -70,27 +69,21 @@ MATRIX::MATRIX(string input){
     //altre righe
     while(getline(f,s)){
         col=0;
+        first_el=true;
         for(auto it=s.begin();it<s.end();it++){
             value=atoi(&(*it));
             if(value==1 || value==2){
                 POINT aux_p(col, value);
 
                 if(first_el){
-               ROW aux_r(aux_p, row);
-               data.push_back(aux_r);
+               ROW aux_r(aux_p);
+               data.insert(make_pair(row,aux_r));
                first_el=false;
                 }else{
-                    auto last_row=--data.end();
-                if(last_row->Get_n_row()==row){
-                   (last_row)->push_back(aux_p);
-               }else{
-                   ROW aux_r(aux_p, row);
-                   data.push_back(aux_r);
-               }
+                 (--data.end())->second.push_back(aux_p);
+                }
 
-            }
-
-        }else{
+            }else{
            if(value!=0){
                 cout<<"dato anomalo"<<endl;
                 exit(1);

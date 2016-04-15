@@ -9,4 +9,5 @@ SOURCES += main.cpp \
     update.cpp
 
 HEADERS += \
-    class.hpp
+    class.hpp \
+    update.hpp

@@ -3,6 +3,7 @@
 
 #include<vector>
 #include<string>
+#include<map>
 
 struct POINT{
     int col;
@@ -15,21 +16,19 @@ typedef typename std::vector<POINT>::iterator ROW_iterator ;
 class ROW{
 private:
     std::vector<POINT> _row;
-    int n_row;
 public:
-    ROW(POINT p, int _n_row);
+    ROW(POINT p);
     void push_back(POINT p){_row.push_back(p);};
-    int Get_n_row(){return n_row;}
     ROW_iterator begin(){return _row.begin();};
     ROW_iterator end() {return _row.end();};
     void add_element_front(int col, int car);
 };
 
-typedef typename std::vector< ROW >::iterator MATRIX_iterator ;
+
 
 class MATRIX{
 private:
-    std::vector<ROW> data;
+    std::map<int, ROW> data;
     int N_row;
     int N_col;
     bool move_blue=true;

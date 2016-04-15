@@ -184,7 +184,8 @@ DIST          = ../../../../Qt/5.6/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.6/gcc_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.6/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.6/gcc_64/mkspecs/features/lex.prf \
-		../Serial/Serial.pro class.hpp ../Serial/main.cpp \
+		../Serial/Serial.pro class.hpp \
+		update.hpp ../Serial/main.cpp \
 		../Serial/read.cpp \
 		../Serial/print.cpp \
 		../Serial/update.cpp
