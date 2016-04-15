@@ -19,7 +19,6 @@ void ROW::add_element_front(int col, int car){
 }
 
 void find_point_to_update_blue(ROW & row, ROW & next_row, vector<vector<POINT>::iterator> & erase, vector<POINT_CHANGE> & add, int n_row, int N_row){
-
     auto next_row_point=next_row.begin();
     auto const last_point=row.end();
     auto const last_next_row_point=next_row.end();
@@ -51,33 +50,60 @@ void MATRIX::update(int iteraction){
         if(move_blue){
             vector<POINT_CHANGE> add;
             vector<vector<POINT>::iterator> erase;
+            POINT_CHANGE aux;
             auto row=--data.end();
-            auto next_row=data.begin();
-                    //ULTIMA RIGA
-            if(row->first==N_row-1){
-                if(next_row->first==0){
-                    find_point_to_update_blue(row->second, next_row->second,erase,add,N_row-1,N_row);
+            auto first_row=data.begin();
+            auto next_row;
+            if(row->first==N_row-1) {
+                next_row=first_row;
+                if(next_row->row==0){
+                    find_point_to_update_blue(row,next_row,erase,add, N_row-1, N_row);
                 }else{
-                    auto const last_point=row->second.end();
-                    POINT_CHANGE aux;
-                    for(auto point=row->second.begin();point!=last_point;point++){
+                    auto first_point=row->second.begin();
+                    for(auto point=--row->second.end();point!=first_point;point--) {
                         if(point->car==1){
                             erase.push_back(point);
-                            aux.col=point->col;
-                            aux.row=0;
                             aux.car=1;
+                            aux.col=point->col;
+                            aux.row=point->0;
                             add.push_back(aux);
                         }
+                    }//PRIMA PUNTO
+                    if(point->car==1){
+                        erase.push_back(point);
+                        aux.car=1;
+                        aux.col=point->col;
+                        aux.row=point->0;
+                        add.push_back(aux);
                     }
                 }
-                //ALTRE RIGHE
-            }else{
-                next_row++;
-                row=data.begin();
-                if(row->first==next_row->first-1){
-                    find_point_to_update_blue(row->second, next_row->second,erase,add,row->first,N_row);
+
+            }
+            else{ // ULTIMA RIGA CHE SPOSTA TUTTO
+                auto first_point=row->second.begin();
+                for(auto point=--row->second.end();point!=first_point;point--) {
+                    if(point->car==1){
+                        erase.push_back(point);
+                        aux.car=1;
+                        aux.col=point->col;
+                        aux.row=point->row+1;
+                        add.push_back(aux);
+                    }
+                }//PRIMA PUNTO
+                if(point->car==1){
+                    erase.push_back(point);
+                    aux.car=1;
+                    aux.col=point->col;
+                    aux.row=point->row+1;
+                    add.push_back(aux);
                 }
             }
+            next_row=row;
+            for(row=--row;row!=first_row;--row){
+
+            }
         }
+
     }
+
 }
