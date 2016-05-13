@@ -39,7 +39,7 @@ bool search_and_erase(ROW & row, ROW & next_row, vector<POINT_CHANGE> & add, int
                 while(next_row_point!=last_next_row_point && next_row_point->col<point->col ){
                     next_row_point++;
                 };
-                if(next_row_point!=last_next_row_point && next_row_point->col!= point->col ){
+                if(next_row_point==last_next_row_point || next_row_point->col!= point->col ){
                     erase.push_back(point);
                     aux.row=n_row+1;
                     aux.col=point->col;
@@ -80,7 +80,7 @@ void search_and_erase(ROW & row, ROW & next_row, vector<vector<POINT>::iterator>
                 while(next_row_point!=last_next_row_point && next_row_point->col<point->col ){
                     next_row_point++;
                 };
-                if(next_row_point!=last_next_row_point && next_row_point->col != point->col ){
+                if(next_row_point==last_next_row_point || next_row_point->col != point->col ){
                     erase.push_back(point);
                     aux.row=0;
                     aux.col=point->col;
