@@ -9,10 +9,7 @@ struct POINT{
     int col;
     int car;
     POINT(int _col, int _car);
-    void up_red(int N_col){
-        if (col<N_col-1) col=col+1;
-        else col=0;
-    }
+    void up_red(){ col=col+1;}
 };
 
 typedef typename std::vector<POINT>::iterator ROW_iterator ;
@@ -28,7 +25,9 @@ public:
     void add_element_front(int col, int car);
     void erase(ROW_iterator p){_row.erase(p);}
     int size(){return _row.size();}
+    void change_first_red();
 };
+
 
 
 

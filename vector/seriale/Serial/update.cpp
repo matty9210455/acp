@@ -5,6 +5,13 @@
 
 using namespace std;
 
+void ROW::change_first_red(){
+    _row.erase(--_row.end());
+    POINT aux(0,2);
+    _row.insert(_row.begin(),aux);
+
+}
+
 void ROW::add_element_front(int col, int car){
     POINT new_point(col,car);
     auto el=_row.begin();
@@ -27,7 +34,7 @@ bool search_and_erase(ROW & row, ROW & next_row, vector<POINT_CHANGE> & add, int
     auto const last_next_row_point=next_row.end();
     POINT_CHANGE aux;
     if(n_row==next_n_row-1){
-        for(auto point=row.begin();point!=last_point;point++){
+        for(auto point=row.begin();point!=last_point;++point){
             if(point->car==1){
                 while(next_row_point!=last_next_row_point && next_row_point->col<point->col ){
                     next_row_point++;
@@ -41,7 +48,7 @@ bool search_and_erase(ROW & row, ROW & next_row, vector<POINT_CHANGE> & add, int
             }
         }
     }else{
-        for(auto point=row.begin();point!=last_point;point++){
+        for(auto point=row.begin();point!=last_point;++point){
             if(point->car==1){
                 erase.push_back(point);
                 aux.row=n_row+1;
@@ -99,19 +106,24 @@ void search_and_erase(ROW & row, ROW & next_row, vector<vector<POINT>::iterator>
 void update_red(ROW & row, int N_col){
     ROW_iterator next_point=row.begin();
     ROW_iterator point=--row.end();
-    ROW_iterator last_check=point;
+    ROW_iterator last_check;
     bool change_last=false;
-    if(point->col!=N_col-1 && next_point->col!=0){
+    bool last_position=(point->col==N_col-1);
+    if(last_position) {last_check=point;}
+    else {last_check=row.end();}
+    if(last_position && point->car==2){
+        if(next_point->col!=0){
         change_last=true;
+        }
     }
     next_point++;
     for(point=row.begin(); point!=last_check;++point){
         if(point->car==2 && point->col!=next_point->col-1){
-            point->up_red(N_col);
+            point->up_red();
         }
         next_point++;
     }
-    if(change_last) ;
+    if(change_last) row.change_first_red() ;
 }
 
 void MATRIX::update(int iteraction){
@@ -146,10 +158,10 @@ void MATRIX::update(int iteraction){
 
            if(row_to_erase.size()!=0){
                 auto canc_first_row=row_to_erase.begin();
-                for(auto canc_row=--row_to_erase.end(); canc_row=!canc_first_row; --canc_row){
-                 data.erase(canc_row);
+                for(auto canc_row=--row_to_erase.end(); canc_row!=canc_first_row; --canc_row){
+                 data.erase(*canc_row);
                 }
-                data.erase(canc_first_row);
+                data.erase(*canc_first_row);
             }
 //ADDING
 
