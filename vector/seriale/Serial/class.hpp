@@ -9,6 +9,10 @@ struct POINT{
     int col;
     int car;
     POINT(int _col, int _car);
+    void up_red(int N_col){
+        if (col<N_col-1) col=col+1;
+        else col=0;
+    }
 };
 
 typedef typename std::vector<POINT>::iterator ROW_iterator ;
@@ -23,6 +27,7 @@ public:
     ROW_iterator end() {return _row.end();};
     void add_element_front(int col, int car);
     void erase(ROW_iterator p){_row.erase(p);}
+    int size(){return _row.size();}
 };
 
 
@@ -37,6 +42,7 @@ public:
     MATRIX(std::string input);
     void print();
     void update(int iteraction);
+    void erase(std::map<int,ROW>::iterator aux){data.erase(aux);}
 };
 
 #endif // CLASS_HPP

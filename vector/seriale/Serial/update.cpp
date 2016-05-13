@@ -1,6 +1,7 @@
 #include"class.hpp"
 #include"update.hpp"
 #include<algorithm>
+#include<iostream>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ void ROW::add_element_front(int col, int car){
 }
 
 //righe centrali
-void search_and_erase(ROW & row, ROW & next_row, vector<POINT_CHANGE> & add, int n_row, int next_n_row){
+bool search_and_erase(ROW & row, ROW & next_row, vector<POINT_CHANGE> & add, int n_row, int next_n_row){
     vector<vector<POINT>::iterator> erase;
     auto next_row_point=next_row.begin();
     auto const last_point=row.end();
@@ -49,11 +50,15 @@ void search_and_erase(ROW & row, ROW & next_row, vector<POINT_CHANGE> & add, int
             }
         }
     }
-    auto first_erase_point=erase.begin();
-    for(auto erase_point=--erase.end();erase_point!=first_erase_point;--erase_point){
-        row.erase(*erase_point);
+    if(erase.size()!=0){
+        auto first_erase_point=erase.begin();
+        for(auto erase_point=--erase.end();erase_point!=first_erase_point;--erase_point){
+            row.erase((*erase_point));
+        }
+        row.erase(*first_erase_point);
     }
-    row.erase(*first_erase_point);
+    if(row.size()==0) return true;
+    return false;
 }
 
 //ultima riga
@@ -91,31 +96,71 @@ void search_and_erase(ROW & row, ROW & next_row, vector<vector<POINT>::iterator>
 }
 
 
+void update_red(ROW & row, int N_col){
+    ROW_iterator next_point=row.begin();
+    ROW_iterator point=--row.end();
+    ROW_iterator last_check=point;
+    bool change_last=false;
+    if(point->col!=N_col-1 && next_point->col!=0){
+        change_last=true;
+    }
+    next_point++;
+    for(point=row.begin(); point!=last_check;++point){
+        if(point->car==2 && point->col!=next_point->col-1){
+            point->up_red(N_col);
+        }
+        next_point++;
+    }
+    if(change_last) ;
+}
 
 void MATRIX::update(int iteraction){
     for(int i=0;i<iteraction;i++){
         if(move_blue){
             vector<POINT_CHANGE> add;
             vector<vector<POINT>::iterator> erase_last_row;
+            vector<map<int,ROW>::iterator> row_to_erase;
             //SEARCH AND ERASE
             auto row=--data.end();
             auto next_row=data.begin();
+            //ultima riga
             search_and_erase(row->second,next_row->second,erase_last_row,add,row->first,next_row->first,N_row);
             auto last_row=data.end();
+            //righe centrali
             row=next_row;
             for(++next_row;next_row!=last_row;++next_row){
-                search_and_erase(row->second,next_row->second,add,row->first,next_row->first);
+                if(search_and_erase(row->second,next_row->second,add,row->first,next_row->first)){
+                    row_to_erase.push_back(row);
+                }
                 ++row;
             }
+            //elimino punti ultima riga
             auto first_point_to_erase=erase_last_row.begin();
             --last_row;
             for(auto point_to_erase=--erase_last_row.end();point_to_erase!=first_point_to_erase;point_to_erase--){
                 last_row->second.erase(*point_to_erase);
             }
             last_row->second.erase(*first_point_to_erase);
+            if(last_row->second.size()==0){row_to_erase.push_back(last_row);}
+            //elimino righe vuote
+
+           if(row_to_erase.size()!=0){
+                auto canc_first_row=row_to_erase.begin();
+                for(auto canc_row=--row_to_erase.end(); canc_row=!canc_first_row; --canc_row){
+                 data.erase(canc_row);
+                }
+                data.erase(canc_first_row);
+            }
 //ADDING
 
             move_blue=false;
+        }else{
+            auto last_row=data.end();
+            int i=0;
+            for(auto row=data.begin();row!=last_row;++row){
+                update_red(row->second,N_col);
+            }
+            move_blue=true;
         }
 
     }
