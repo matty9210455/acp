@@ -1,2 +1,0 @@
-# acp
-project of july
