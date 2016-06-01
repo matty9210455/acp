@@ -9,6 +9,7 @@ struct POINT{
     int col;
     int car;
     POINT(int _col, int _car) : col(_col) ,car(_car) {};
+    virtual ~POINT(){};
 };
 
 
@@ -29,7 +30,9 @@ public:
     std::vector<POINT>::iterator  end(){return row.end();};
     void erase(std::vector<POINT>::iterator p){row.erase(p);};
     void insert(std::vector<POINT>::iterator it, POINT & aux){ row.insert(it,aux);}
-    int size() {row.size();}
+    int size() {return row.size();};
+    bool empty() {return row.empty();};
+    POINT operator [](int i){return row[i];}
 };
 
 
@@ -43,7 +46,8 @@ private:
 public:
    MATRIX(std::string input);
    void print();
-   void update(int iteraction);
+   void update();
+   int size(){return data.size();};
 
 };
 
