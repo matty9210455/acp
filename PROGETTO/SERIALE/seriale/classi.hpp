@@ -48,6 +48,7 @@ public:
    void print();
    void update();
    int size(){return data.size();};
+   void print(int it);
 
 };
 

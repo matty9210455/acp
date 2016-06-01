@@ -13,17 +13,20 @@ int main()
     }
     cout<<"iterazione "<<i<<endl;
     data.print();
+    data.print(i);
     while (i<10){
     data.update();
     i++;
     }
     cout<<"iterazione "<<i<<endl;
     data.print();
+    data.print(i);
     while (i<100){
     data.update();
     i++;
     }
     cout<<"iterazione "<<i<<endl;
     data.print();
+    data.print(i);
     return 0;
 }
