@@ -186,7 +186,10 @@ void MATRIX::update(){
             move_blue=false;
         }else{
             int N=data.size();
-            #pragma omp parallel for
+            #pragma omp parallel num_threads(4)
+            int n_t=omp_get_num_thread();
+            int N_TOT=omp_get_threads_num();
+            cout<<"num tot "<<N_TOT<<" n tre "<<n_t<<endl;
             for(auto row=0;row<N;row++){
                 UpdateRedCol(data[row],N_col);
             }
