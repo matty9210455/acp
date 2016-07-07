@@ -2,7 +2,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-
+#include<omp.h>
 using namespace std;
 
 bool compare_POINT(POINT const & p1, POINT const & p2){ return p1.col<p2.col; }
@@ -185,7 +185,9 @@ void MATRIX::update(){
             if(first->empty()) data.erase(first);
             move_blue=false;
         }else{
+
             auto last=data.end();
+            #pragma omp parallel for
             for(auto row=data.begin();row!=last;row++){
                 UpdateRedCol(*row,N_col);
             }
