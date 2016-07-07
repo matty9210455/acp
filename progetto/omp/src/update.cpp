@@ -185,11 +185,10 @@ void MATRIX::update(){
             if(first->empty()) data.erase(first);
             move_blue=false;
         }else{
-
-            auto last=data.end();
+            int N=data.size();
             #pragma omp parallel for
-            for(auto row=data.begin();row!=last;row++){
-                UpdateRedCol(*row,N_col);
+            for(auto row=0;row<N;row++){
+                UpdateRedCol(data[row],N_col);
             }
             move_blue=true;
         }
