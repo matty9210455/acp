@@ -1,9 +1,11 @@
 #include <iostream>
+#include<classi.hpp>
 
 using namespace std;
 
-int main(int argc, char *argv[])
+int main()
 {
-    cout << "Hello World!" << endl;
+    matrix A("problem.csv");
+    A.print();
     return 0;
 }
