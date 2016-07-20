@@ -25,6 +25,7 @@ void UpdateBlue(vector<point> & data, vector<vector<point>::iterator> & erase, v
         if(data[i].car==1){
             point p=data[i];
             point aux(1,p.row+1,p.col);
+            if(p.row==N_row-1) aux.row=0;
             it=lower_bound(it,fine,aux,ComparePoint);
             if(it->col!=p.col){
                 add.push_back(aux);
