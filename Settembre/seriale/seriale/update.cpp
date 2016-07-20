@@ -33,7 +33,13 @@ void UpdateBlue(vector<point> & data, vector<vector<point>::iterator> & erase, v
             }
         }
     }
+    auto N_change=erase.size();
+    for(auto i=N-1;i>=0;i--){
+        data.erase(erase[i]);
+    };
 }
+
+
 int main(){
     point p(1,2,1);
     point p1(1,1,2);
