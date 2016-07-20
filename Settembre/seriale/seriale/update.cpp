@@ -17,7 +17,7 @@ bool ComparePoint(point const & p1, point const & p2){
 };
 
 
-void UpdateBlue(vector<point> & data, vector<vector<point>::iterator> & erase, vector<point> & add){
+void UpdateBlue(vector<point> & data, vector<vector<point>::iterator> & erase, vector<point> & add, int N_row){
     auto N=data.size();
     auto it=data.begin();
     auto fine=data.end();
@@ -41,7 +41,7 @@ void UpdateBlue(vector<point> & data, vector<vector<point>::iterator> & erase, v
 
 
 int main(){
-    point p(1,2,1);
+    point p(4,2,1);
     point p1(1,1,2);
     point p2(2,1,1);
     point p3(3,2,2);
@@ -51,8 +51,12 @@ int main(){
     cout<<ComparePoint(p2,p1)<<endl;
     cout<<ComparePoint(p3,p1)<<endl;
     cout<<ComparePoint(p2,p3)<<endl;
-    vector<point> a{p2,p1,p4,p3};
+    vector<point> a{p2,p1,p3};
     auto it=lower_bound(a.begin(),a.end(),p,ComparePoint );
             cout<<it->row<<" "<<it->col<<" "<<it->car<<endl;
             cout<<ComparePoint(p1,p)<<" "<<ComparePoint(p3,p)<<" "<<ComparePoint(p4,p)<<endl;
+    a.insert(it,p);
+    for(int i=0;i<4;i++){
+        cout<<a[i].car<<endl;
+    }
 }
