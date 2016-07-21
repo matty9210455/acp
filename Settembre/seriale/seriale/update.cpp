@@ -35,15 +35,13 @@ void matrix::update(int iteration){
                     if(it->col!=p.col && it!=fine){
                         add.push_back(aux);
                         erase.push_back(it);
-                    }
+                        cout<<it->row<< " "<<it->col<< " eliminazione"<<endl;                    }
                 }
             }
 
             //cancellazzione
             auto N_change=erase.size();
-            for(int i=N-1;i>=0;i--){
-                                        cout<<"inizi cancellazzione "<<i<<" totale "<<N<<endl;
-                                        cout<<erase[i]->row<<" "<<erase[i]->col<<endl;
+            for(int i=N_change-1;i>=0;i--){
                 data.erase(erase[i]);
 
             };
