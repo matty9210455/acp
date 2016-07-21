@@ -4,7 +4,7 @@
 #include<vector>
 #include<string>
 
-using namespace std;
+
 
 struct point{
     int car;
@@ -15,16 +15,18 @@ struct point{
 
 class matrix{
 private:
-    vector<point> data;
+    std::vector<point> data;
     int N_row=0;
     int N_col=0;
+    bool move_blue=true;
 public:
     void add_point(int car, int row, int col){
         point p(car,row,col);
         data.push_back(p);
     };
 
-    matrix(string input);
+    matrix(std::string input);
     void print();
+    void update(int iteraction);
 };
 #endif // CLASSI_HPP

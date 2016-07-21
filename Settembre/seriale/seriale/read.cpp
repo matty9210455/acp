@@ -22,7 +22,6 @@ matrix::matrix(string input){
     int col(0); //indice colonna che sto leggendo
     int row(0); //indice riga che sto leggendo
     int value(0);
-    bool first_el=true;
 
     //prima riga
 
