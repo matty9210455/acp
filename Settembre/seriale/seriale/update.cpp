@@ -45,9 +45,7 @@ void matrix::update(int iteration){
             //cancellazzione
             auto N_change=erase.size();
             for(int i=N_change-1;i>=0;i--){
-                cout<<"cancellazione "<<i<<" su "<<N_change<<endl;
                 data.erase(erase[i]);
-
             };
             //aggiunta
             auto it=data.begin();
