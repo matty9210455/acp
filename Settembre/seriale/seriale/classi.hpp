@@ -27,6 +27,6 @@ public:
 
     matrix(std::string input);
     void print();
-    void update(int iteraction);
+    void update();
 };
 #endif // CLASSI_HPP
