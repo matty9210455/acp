@@ -70,7 +70,8 @@ void matrix::update(){
             }
 
             //cambio
-           // move_blue=false;
+            move_blue=false;
         }
+
 }
 
