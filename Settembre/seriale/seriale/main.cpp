@@ -9,7 +9,7 @@ int main()
     cout<<"iterazione 0"<<endl;
     A.print();
     cout<<endl;
-    for(int i=1;i<10;i++){
+    for(int i=1;i<=10;i++){
         cout<<"iterazione "<<i<<endl;
         A.update();
         A.print();

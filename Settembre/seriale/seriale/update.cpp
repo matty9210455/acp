@@ -71,7 +71,77 @@ void matrix::update(){
 
             //cambio
             move_blue=false;
-        }
+        }else{
+            auto fine=data.end();
+            vector<point> add;
+            vector<vector<point>::iterator> erase;
+            auto it=data.begin();
+            int row=-1;
+            for(auto next_point=++data.begin();next_point!=fine;next_point++){
 
+                if(it->car==2){
+
+                    if(it->col==0){
+                        row=it->row;
+                    }
+
+                    if(it->col==N_col-1){
+
+                        if(it->row!=row){
+                            point aux(2,it->row,0);
+                            add.push_back(aux);
+                            erase.push_back(it);
+                        };
+
+                    }else{
+                        if(it->col!=next_point->col-1 || it->row!=next_point->row){
+                            it->col=it->col+1;
+                        }
+                    }
+                }
+                it++;
+            }
+            //ULTIMO PUNTO//
+            if(it->car==2){
+
+                if(it->col==N_col-1){
+                    if(it->row!=row){
+                        point aux(2,it->row,0);
+                        add.push_back(aux);
+                        erase.push_back(it);
+                    };
+
+                }else{
+                    it->col=it->col+1;
+                }
+            }
+
+            //cancellazzione
+            auto N_change=erase.size();
+            for(int i=N_change-1;i>=0;i--){
+                data.erase(erase[i]);
+            };
+
+            //aggiunta
+
+            it=data.begin();
+            fine=data.end();
+            for(size_t i_add=0;i_add<N_change;i_add++){
+                auto p=add[i_add];
+
+                it=lower_bound(it,fine,p,ComparePoint);
+
+                if(it==fine){
+                    data.push_back(p);
+                    it=data.end()--;
+                    fine=data.end();
+                }else{
+                    data.insert(it,p);
+                    fine=data.end();
+                }
+            }
+
+            move_blue=true;
+        }
 }
 
