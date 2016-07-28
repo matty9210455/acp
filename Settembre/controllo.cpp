@@ -7,9 +7,9 @@
 using namespace std;
 
 
-int main(){
-    string prof="100_p.csv";
-    string mie="100.csv";
+int main(int argc, char *argv[]){
+    string prof=argv[1];
+    string mie=argv[2];
     ifstream f1(prof);
     ifstream f2(mie);
     string s1;
