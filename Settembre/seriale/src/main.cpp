@@ -37,10 +37,27 @@ int main()
     for(size_t i=0;i<N;i++){
         int N_it=iteration[i];
         while(j<N_it){
+
             A.update();
             j++;
         }
         A.print(j);
+
+    }/*
+
+    int N=15;
+    for(int j=1;j<=N;j++){
+        cout<<"iterazione "<<j<<endl;
+
+        //cout<<"update"<<endl;
+
+        A.update();
+        A.print();
+        cout<<endl;
     }
+    //cout<<"iterazione "<<N<<endl;
+    A.print();
+    cout<<endl;*/
+
     return 0;
 }

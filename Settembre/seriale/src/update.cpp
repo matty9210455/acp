@@ -5,7 +5,7 @@
 using namespace std;
 
 
-bool ComparePoint(point const & p1, point const & p2){
+bool ComparePoint(point const & p1, point const & p2){//torna vero se p1 e dietro p2
     if(p1.row<p2.row){
         return true;
     }else{
@@ -20,58 +20,90 @@ bool ComparePoint(point const & p1, point const & p2){
 
 void matrix::update(){
         if(move_blue){
+            cout<<endl<<"blu"<<endl;
             auto fine=data.end();
             vector<vector<point>::iterator> erase;
             vector<point> add;
 
-            //controllo
-            for(auto p=data.begin();p!=fine;p++){
+//controllo
+
+            auto p=data.begin();
+            while(p!=fine && p->row<N_row-1){
                 if(p->car==1){
-                    point punto=(*p);
-                    point aux(1,punto.row+1,punto.col);
-                    if(punto.row==N_row-1){
-                        aux.row=0;
-                    }
+                    point aux(1,p->row+1,p->col);
                     if(!binary_search(p,fine,aux,ComparePoint)){
                         add.push_back(aux);
                         erase.push_back(p);
-                        }
+                    }
                 }
+                p++;
+            }
+
+            auto it_aux=data.begin();
+            int add_first_row=0;
+            while(p!=fine){
+                if(p->car==1){
+                    point aux(1,0,p->col);
+                    if(!binary_search(it_aux,fine,aux,ComparePoint)){
+                        erase.push_back(p);
+                        add.insert(add.begin()+add_first_row,aux);
+                        add_first_row++;
+                    }
+                }
+                p++;
             }
 
             //cancellazzione
+
+            /*cout<<"matrice pre update"<<endl;
+            for(auto print=data.begin();print!=data.end();print++){
+              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
+            }*/
             auto N_change=erase.size();
+
+            /*cout<<"cancellazione"<<endl;
+            for(auto print=erase.begin();print!=erase.end();print++){
+              cout<<"righe "<<(*print)->row<<" colonne "<<(*print)->col<<" macchina "<<(*print)->car<<endl;
+            }*/
+
             for(int i=N_change-1;i>=0;i--){
                 data.erase(erase[i]);
             };
 
-            //aggiunta
+           //aggiunta
 
-            auto it=data.begin();
-            bool first=true;
+           /* cout<<"aggiunta"<<endl;
+            for(auto print=add.begin();print!=add.end();print++){
+              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
+            }*/
+
+            int j=0;
+            int N_point=data.size();
             for(size_t i_add=0;i_add<N_change;i_add++){
-                auto p=add[i_add];
-
-                if(p.row==0 && first){
-                        it=data.begin();
-                        first=false;
+                bool insert=true;
+                while(j<N_point && insert){
+                    if(ComparePoint(add[i_add],data[j])){
+                        auto it=data.begin();
+                        data.insert(it+j,add[i_add]);
+                        N_point++;
+                        insert=false;
+                    }
+                    j++;
                 }
-
-                it=lower_bound(it,fine,p,ComparePoint);
-
-                if(it==fine){
-                    data.push_back(p);
-                    it=data.end()--;
-                    fine=data.end();
-                }else{
-                    data.insert(it,p);
-                    fine=data.end();
+                if(j==N_point && insert){
+                    data.push_back(add[i_add]);
                 }
-            }
+           }
+
+           /* cout<<"matrice post update"<<endl;
+            for(auto print=data.begin();print!=data.end();print++){
+              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
+            }*/
 
             //cambio
             move_blue=false;
         }else{
+            cout<<endl<<"rosse"<<endl;
             auto fine=data.end();
             vector<point> add;
             vector<vector<point>::iterator> erase;
@@ -117,29 +149,41 @@ void matrix::update(){
             }
 
             //cancellazzione
+
+
             auto N_change=erase.size();
+
+            /*for(auto print=erase.begin();print!=erase.end();print++){
+              cout<<"righe "<<(*print)->row<<" colonne "<<(*print)->col<<" macchina "<<(*print)->car<<endl;
+            }*/
+
             for(int i=N_change-1;i>=0;i--){
                 data.erase(erase[i]);
             };
 
-            //aggiunta
+           //aggiunta
 
-            it=data.begin();
-            fine=data.end();
+            /*for(auto print=add.begin();print!=add.end();print++){
+              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
+            }*/
+
+            int j=0;
+            int N_point=data.size();
             for(size_t i_add=0;i_add<N_change;i_add++){
-                auto p=add[i_add];
-
-                it=lower_bound(it,fine,p,ComparePoint);
-
-                if(it==fine){
-                    data.push_back(p);
-                    it=data.end()--;
-                    fine=data.end();
-                }else{
-                    data.insert(it,p);
-                    fine=data.end();
+                bool insert=true;
+                while(j<N_point && insert){
+                    if(ComparePoint(add[i_add],data[j])){
+                        auto it=data.begin();
+                        data.insert(it+j,add[i_add]);
+                        N_point++;
+                        insert=false;
+                    }
+                    j++;
                 }
-            }
+                if(j==N_point && insert){
+                    data.push_back(add[i_add]);
+                }
+           }
 
             move_blue=true;
         }
