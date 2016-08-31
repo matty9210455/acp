@@ -2,6 +2,7 @@
 #include<map>
 #include<vector>
 
+
 using namespace std;
 
 struct point{
@@ -71,6 +72,7 @@ cout<<endl;
 }
 cout<<endl;
 */
+
 for(int iter=0;iter<5;iter++){
 vector<point_to_erase> erase;
 vector<point> add;

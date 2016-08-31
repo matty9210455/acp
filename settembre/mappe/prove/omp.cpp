@@ -3,7 +3,7 @@
 
 using namespace std;
 int main(){
-    #pragma omp paralle
+#pragma omp parallel
     {
         int n_th=omp_get_thread_num();
         int N_tot=omp_get_num_threads();
