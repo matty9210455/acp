@@ -77,7 +77,11 @@ for(int iter=0;iter<5;iter++){
 vector<point_to_erase> erase;
 vector<point> add;
 if(move_blue){
-for(auto it_row=a.begin();it_row!=a.end();it_row++){
+#pragma omp parallel
+{
+int n_th=omp_get_thread_num();
+int N_tot=omp_get_num_threads();
+for(auto it_row=a.begin()+n_th;it_row<a.end();it_row=it_row+N_tot){
     for(auto it=it_row->second.begin();it!=it_row->second.end();it++){
         if(it->second==1){
         if(it_row->first!=N_row-1){
@@ -115,6 +119,7 @@ for(auto it_row=a.begin();it_row!=a.end();it_row++){
         }
         }
     }
+}
 }
 }else{
     for(auto it_row=a.begin();it_row!=a.end();it_row++){
