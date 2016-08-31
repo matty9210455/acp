@@ -1,8 +1,10 @@
 #include<iostream>
-#include<omp>
+#include<omp.h>
 
+using namespace std;
 int main(){
-    #pragma omp paralle{
+    #pragma omp paralle
+    {
         int n_th=omp_get_thread_num();
         int N_tot=omp_get_num_threads();
         for(size_t i=0;i<N_tot;i++){
