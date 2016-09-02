@@ -1,0 +1,19 @@
+#!/bin/bash
+
+OMP_SRC = src/main.cpp src/print.cpp src/read.cpp src/update.cpp 
+CXX = g++
+CXXFLAGS = -O3 -march=native -Wall -Wextra -std=c++11 -I$(INCLUDE_DIR)
+CXXFLAGS_OMP = -fopenmp -openmp
+
+INCLUDE_DIR = include
+
+# PUT HERE THE PATH TO YOUR HEADER FILES TO CORRECTLY RECOMPILE AT ANY CHANGE
+# FOR EXAMPLE:
+# DEPS = $(INCLUDE_DIR)/*.h*
+DEPS = $(INCLUDE_DIR)/*.h*
+
+omp: $(OMP_SRC) $(DEPS)
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_OMP) $(OMP_SRC) -o $@
+
+
+rm *.o
