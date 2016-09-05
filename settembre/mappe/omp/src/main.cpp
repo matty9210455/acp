@@ -39,7 +39,6 @@ int main(){
     for(size_t i=0; i<N;i++){
         A.update(iteration[i]-old);
         A.print(iteration[i]);
-        A.print();
         old=iteration[i];
     }
 
