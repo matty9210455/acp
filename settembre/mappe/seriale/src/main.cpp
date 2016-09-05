@@ -32,8 +32,6 @@ int main(){
     }
     f.close();
 
-    A.print();
-
     auto N=iteration.size();
     auto old=0;
     for(size_t i=0; i<N;i++){
