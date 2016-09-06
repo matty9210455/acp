@@ -19,10 +19,11 @@ void matrix::update(int N_iter){
                     if( (it_row->first+1==next_row->first || (it_row->first==N_row-1 && next_row->first==0) ) && next_row!=last_row){
                     auto last_point=it_row->second.end();
                     auto last_nextRow_point=next_row->second.end();
+                    auto pointNextRow=next_row->second.begin();
                     for(auto it=it_row->second.begin();it!=last_point;it++){
                         if(it->second==1){
-                            auto aux=next_row->second.find(it->first);
-                            if(aux==last_nextRow_point){
+                            while(pointNextRow!=last_nextRow_point && it->first > pointNextRow->first){pointNextRow++;}
+                            if(pointNextRow->first!=it->first || pointNextRow==last_nextRow_point ){
                                 point aux_add(it_row->first+1,it->first,1);
                                 if(aux_add.row==N_row){aux_add.row=0;}
                                 add.push_back(aux_add);
@@ -48,11 +49,12 @@ void matrix::update(int N_iter){
         }else{
             for(auto it_row=data.begin();it_row!=last_row;it_row++){
                 auto last_point=it_row->second.end();
+                auto nextPoint=it_row->second.begin();
                 for(auto it=it_row->second.begin();it!=last_point;it++){
+                    nextPoint++;
+                    if(it->first==N_col-1){nextPoint=it_row->second.begin();}
                     if(it->second==2){
-                        auto aux=it_row->second.find(it->first+1);
-                        if(it->first==N_col-1){aux=it_row->second.find(0);}
-                        if(aux==last_point){
+                        if( (nextPoint==last_point) || ( (nextPoint->first!=it->first+1 && it->first!=N_col-1) || (it->first==N_col-1 && nextPoint->first!=0) ) ){
                             point aux_add(it_row->first,it->first+1,2);
                             if(aux_add.col==N_col){aux_add.col=0;}
                             add.push_back(aux_add);
