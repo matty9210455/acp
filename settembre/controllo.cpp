@@ -25,10 +25,7 @@ int main(int argc, char *argv[]){
         j=0;
         for(auto it=s1.begin();it<s1.end();it++){
             aux.push_back(atoi(&(*it)));
-
-            if(i==9 && j==0)
-            {cout<<"primo punto prima mat "<<i<<" "<<j<<atoi(&(*it));}
-                        j++;
+            j++;
         }
         A1.push_back(aux);
         i++;
@@ -41,10 +38,7 @@ int main(int argc, char *argv[]){
         vector<int> aux;
         for(auto it=s2.begin();it<s2.end();it++){
             aux.push_back(atoi(&(*it)));
-
-            if(i==9 && j==0)
-            {cout<<"primo punto prima mat "<<i<<" "<<j<<atoi(&(*it));}
-                        j++;
+            j++;
         }
         A2.push_back(aux);
         i++;

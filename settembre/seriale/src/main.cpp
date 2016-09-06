@@ -2,11 +2,14 @@
 #include<classi.hpp>
 #include<fstream>
 #include<stdlib.h>
+#include<vector>
+#include "stopwatch.hpp"
 
 using namespace std;
 
-int main()
-{
+int main(){
+    stopwatch sw;
+    sw.start();
     matrix A("problem.csv");
 
     vector<int> iteration;
@@ -32,32 +35,16 @@ int main()
     }
     f.close();
 
-    int j=0;
     auto N=iteration.size();
-    for(size_t i=0;i<N;i++){
-        int N_it=iteration[i];
-        while(j<N_it){
-
-            A.update();
-            j++;
-        }
-        A.print(j);
-
-    }/*
-
-    int N=15;
-    for(int j=1;j<=N;j++){
-        cout<<"iterazione "<<j<<endl;
-
-        //cout<<"update"<<endl;
-
-        A.update();
-        A.print();
-        cout<<endl;
+    auto old=0;
+    for(size_t i=0; i<N;i++){
+        A.update(iteration[i]-old);
+        A.print(iteration[i]);
+        old=iteration[i];
     }
-    //cout<<"iterazione "<<N<<endl;
-    A.print();
-    cout<<endl;*/
-
+    
+    sw.stop();
+    cout<<"tempo impiegato "<<sw.elapsed_ms()<<endl;
     return 0;
 }
+

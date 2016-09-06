@@ -1,191 +1,88 @@
 #include<classi.hpp>
-#include<iostream>
-#include<algorithm>
+#include<vector>
 
 using namespace std;
 
-
-bool ComparePoint(point const & p1, point const & p2){//torna vero se p1 e dietro p2
-    if(p1.row<p2.row){
-        return true;
-    }else{
-        if(p1.row>p2.row) {return false;}
-        if(p1.col<p2.col){
-            return true;
-        }
-    };
-    return false;
-};
-
-
-void matrix::update(){
+void matrix::update(int N_iter){
+    for(size_t iter=0;iter<N_iter;iter++){
+        vector<point_to_erase> erase;
+        vector<point> add;
+        auto last_row=data.end();
         if(move_blue){
-            cout<<endl<<"blu"<<endl;
-            auto fine=data.end();
-            vector<vector<point>::iterator> erase;
-            vector<point> add;
-
-//controllo
-
-            auto p=data.begin();
-            while(p!=fine && p->row<N_row-1){
-                if(p->car==1){
-                    point aux(1,p->row+1,p->col);
-                    if(!binary_search(p,fine,aux,ComparePoint)){
-                        add.push_back(aux);
-                        erase.push_back(p);
+            for(auto it_row=data.begin();it_row!=last_row;it_row++){
+                auto next_row=data.find(it_row->first+1);
+                if(it_row->first==N_row-1) {next_row=data.find(0);}
+                if(next_row!=last_row){
+                    auto last_point=it_row->second.end();
+                    auto last_nextRow_point=next_row->second.end();
+                    for(auto it=it_row->second.begin();it!=last_point;it++){
+                        if(it->second==1){
+                            auto aux=next_row->second.find(it->first);
+                            if(aux==last_nextRow_point){
+                                point aux_add(it_row->first+1,it->first,1);
+                                if(aux_add.row==N_row){aux_add.row=0;}
+                                add.push_back(aux_add);
+                                point_to_erase aux_er(it_row,it);
+                                erase.push_back(aux_er);
+                            }
+                        }
                     }
-                }
-                p++;
-            }
-
-            auto it_aux=data.begin();
-            int add_first_row=0;
-            while(p!=fine){
-                if(p->car==1){
-                    point aux(1,0,p->col);
-                    if(!binary_search(it_aux,fine,aux,ComparePoint)){
-                        erase.push_back(p);
-                        add.insert(add.begin()+add_first_row,aux);
-                        add_first_row++;
-                    }
-                }
-                p++;
-            }
-
-            //cancellazzione
-
-            /*cout<<"matrice pre update"<<endl;
-            for(auto print=data.begin();print!=data.end();print++){
-              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
-            }*/
-            auto N_change=erase.size();
-
-            /*cout<<"cancellazione"<<endl;
-            for(auto print=erase.begin();print!=erase.end();print++){
-              cout<<"righe "<<(*print)->row<<" colonne "<<(*print)->col<<" macchina "<<(*print)->car<<endl;
-            }*/
-
-            for(int i=N_change-1;i>=0;i--){
-                data.erase(erase[i]);
-            };
-
-           //aggiunta
-
-           /* cout<<"aggiunta"<<endl;
-            for(auto print=add.begin();print!=add.end();print++){
-              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
-            }*/
-
-            int j=0;
-            int N_point=data.size();
-            for(size_t i_add=0;i_add<N_change;i_add++){
-                bool insert=true;
-                while(j<N_point && insert){
-                    if(ComparePoint(add[i_add],data[j])){
-                        auto it=data.begin();
-                        data.insert(it+j,add[i_add]);
-                        N_point++;
-                        insert=false;
-                    }
-                    j++;
-                }
-                if(j==N_point && insert){
-                    data.push_back(add[i_add]);
-                }
-           }
-
-           /* cout<<"matrice post update"<<endl;
-            for(auto print=data.begin();print!=data.end();print++){
-              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
-            }*/
-
-            //cambio
-            move_blue=false;
-        }else{
-            cout<<endl<<"rosse"<<endl;
-            auto fine=data.end();
-            vector<point> add;
-            vector<vector<point>::iterator> erase;
-            auto it=data.begin();
-            int row=-1;
-            for(auto next_point=++data.begin();next_point!=fine;next_point++){
-
-                if(it->car==2){
-
-                    if(it->col==0){
-                        row=it->row;
-                    }
-
-                    if(it->col==N_col-1){
-
-                        if(it->row!=row){
-                            point aux(2,it->row,0);
-                            add.push_back(aux);
-                            erase.push_back(it);
-                        };
-
-                    }else{
-                        if(it->col!=next_point->col-1 || it->row!=next_point->row){
-                            it->col=it->col+1;
+                }else{
+                    auto last_point=it_row->second.end();
+                    for(auto it=it_row->second.begin();it!=last_point;it++){
+                        if(it->second==1){
+                                point aux_add(it_row->first+1,it->first,1);
+                                if(aux_add.row==N_row){aux_add.row=0;}
+                                add.push_back(aux_add);
+                                point_to_erase aux_er(it_row,it);
+                                erase.push_back(aux_er);
                         }
                     }
                 }
-                it++;
             }
-            //ULTIMO PUNTO//
-            if(it->car==2){
-
-                if(it->col==N_col-1){
-                    if(it->row!=row){
-                        point aux(2,it->row,0);
-                        add.push_back(aux);
-                        erase.push_back(it);
-                    };
-
-                }else{
-                    it->col=it->col+1;
-                }
-            }
-
-            //cancellazzione
-
-
-            auto N_change=erase.size();
-
-            /*for(auto print=erase.begin();print!=erase.end();print++){
-              cout<<"righe "<<(*print)->row<<" colonne "<<(*print)->col<<" macchina "<<(*print)->car<<endl;
-            }*/
-
-            for(int i=N_change-1;i>=0;i--){
-                data.erase(erase[i]);
-            };
-
-           //aggiunta
-
-            /*for(auto print=add.begin();print!=add.end();print++){
-              cout<<"righe "<<(print)->row<<" colonne "<<(print)->col<<" macchina "<<(print)->car<<endl;
-            }*/
-
-            int j=0;
-            int N_point=data.size();
-            for(size_t i_add=0;i_add<N_change;i_add++){
-                bool insert=true;
-                while(j<N_point && insert){
-                    if(ComparePoint(add[i_add],data[j])){
-                        auto it=data.begin();
-                        data.insert(it+j,add[i_add]);
-                        N_point++;
-                        insert=false;
+            move_blue=false;
+        }else{
+            for(auto it_row=data.begin();it_row!=last_row;it_row++){
+                auto last_point=it_row->second.end();
+                for(auto it=it_row->second.begin();it!=last_point;it++){
+                    if(it->second==2){
+                        auto aux=it_row->second.find(it->first+1);
+                        if(it->first==N_col-1){aux=it_row->second.find(0);}
+                        if(aux==last_point){
+                            point aux_add(it_row->first,it->first+1,2);
+                            if(aux_add.col==N_col){aux_add.col=0;}
+                            add.push_back(aux_add);
+                            point_to_erase aux_er(it_row,it);
+                            erase.push_back(aux_er);
+                        }
                     }
-                    j++;
                 }
-                if(j==N_point && insert){
-                    data.push_back(add[i_add]);
-                }
-           }
-
+            }
             move_blue=true;
         }
-}
 
+        //erase
+
+        auto N_change=erase.size();
+        for(size_t i=0;i<N_change;i++){
+            erase[i].row->second.erase(erase[i].col);
+        }
+
+        //add
+
+        for(size_t i_add=0;i_add<add.size();i_add++){
+            data[add[i_add].row][add[i_add].col]=add[i_add].car;
+        }
+        
+        auto it_row=data.begin();
+        while (it_row!=last_row) {
+            if(it_row->second.size ()==0){
+                auto aux=it_row;
+                it_row++;
+                data.erase(aux);
+            }else{
+                it_row++;
+            }
+        }
+    }
+}

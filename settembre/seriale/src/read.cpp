@@ -1,4 +1,3 @@
-
 #include"classi.hpp"
 #include<fstream>
 #include<stdlib.h>
@@ -24,58 +23,70 @@ matrix::matrix(string input){
     int value(0);
 
     //prima riga
-
     getline(f,s);
+     for(auto it=s.begin();it<s.end();it++){
+         value=atoi(&(*it));
+         if(value!=0){
+             if(value==1 || value==2){
+                 data[row][col]=value;
+             }else{
+                 cout<<"dato anomalo "<<value<<endl;
+                 exit(1);
+             }
+         }
+         col++;//indice colonna
+         it++;//vado su virgola
+     }
 
-    for(auto it=s.begin();it<s.end();it++){
+     row++;
+     N_col=col;
+     N_row=row;
 
-        value=atoi(&(*it));
-        if(value==1 || value==2){
-            point p(value,row,col);
-            data.push_back(p);
-        }else{
-           if(value!=0){
-                cout<<"dato anomalo "<<value<<endl;
-                exit(1);
-           }
-        }
+     //altre righe
+     while(getline(f,s)){
+         col=0;
+         for(auto it=s.begin();it<s.end();it++){
+             value=atoi(&(*it));
+             if(value!=0){
+                 if(value==1 || value==2){
+                     data[row][col]=value;
+                 }else{
+                     cout<<"dato anomalo "<<value<<endl;
+                     exit(1);
+                 }
+             }
+             col++;//indice colonna
+             it++;//vado su virgola
+         }
+         if(N_col!=col){
+             cout<<"numeri di elementi letti irregolare"<<endl;
+             cout<<"numeri aspettati "<<N_col<<" numeri letti "<<col<<endl;
+             exit(1);
+         }
 
-        col=col+1;//indice colonna
-        it++; //vado su virgola
-    }
-
-    row++;
-    N_col=col;
-    N_row=row;
-
-    //altre righe
-    while(getline(f,s)){
-        col=0;
-        for(auto it=s.begin();it<s.end();it++){
-            value=atoi(&(*it));
-            if(value==1 || value==2){
-                point p(value,row,col);
-                data.push_back(p);
-            }else{
-           if(value!=0){
-                cout<<"dato anomalo "<<value<<endl;
-                exit(1);
-           }
-        }
-
-        col=col+1;//indice colonna
-        it++; //vado su virgola
-    }
-
-    if(N_col!=col){
-        cout<<"numeri di elementi letti irregolare"<<endl;
-        cout<<"numeri aspettati "<<N_col<<" numeri letti "<<col<<endl;
-        exit(1);
-    }
-
-    row++;
-    N_row=row;
+         row++;
+         N_row=row;
+     }
+     f.close();
 }
-f.close();
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

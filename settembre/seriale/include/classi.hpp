@@ -1,33 +1,40 @@
 #ifndef CLASSI_HPP
 #define CLASSI_HPP
 
-#include<vector>
-#include<string>
-
-
+#include<map>
 
 struct point{
-    int car;
     int row;
     int col;
-    point(int _car, int _row, int _col) : car(_car), row(_row), col(_col) {};
+    int car;
+public:
+    point(int _row, int _col, int _car) : car(_car), row(_row), col(_col) {};
+};
+
+typedef typename std::map<int,std::map<int,int> >::iterator iterator_row;
+typedef typename std::map<int,int>::iterator iterator_point;
+
+struct point_to_erase{
+    iterator_row row;
+    iterator_point col;
+    /*int row;
+    int col;*/
+public:
+    point_to_erase( iterator_row _row, iterator_point _col ) :  row(_row), col(_col) {};
 };
 
 class matrix{
 private:
-    std::vector<point> data;
-    int N_row=0;
-    int N_col=0;
+    std::map<int,std::map<int,int> > data;
     bool move_blue=true;
+    int N_row;
+    int N_col;
 public:
-    void add_point(int car, int row, int col){
-        point p(car,row,col);
-        data.push_back(p);
-    };
-
     matrix(std::string input);
     void print();
-    void update();
+    void update(int N_iter);
     void print(int iteration);
+
 };
+
 #endif // CLASSI_HPP

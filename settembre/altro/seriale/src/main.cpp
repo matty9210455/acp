@@ -2,11 +2,11 @@
 #include<classi.hpp>
 #include<fstream>
 #include<stdlib.h>
-#include<vector>
 
 using namespace std;
 
-int main(){
+int main()
+{
     matrix A("problem.csv");
 
     vector<int> iteration;
@@ -32,14 +32,32 @@ int main(){
     }
     f.close();
 
+    int j=0;
     auto N=iteration.size();
-    auto old=0;
-    for(size_t i=0; i<N;i++){
-        A.update(iteration[i]-old);
-        A.print(iteration[i]);
-        old=iteration[i];
+    for(size_t i=0;i<N;i++){
+        int N_it=iteration[i];
+        while(j<N_it){
+
+            A.update();
+            j++;
+        }
+        A.print(j);
+
+    }/*
+
+    int N=15;
+    for(int j=1;j<=N;j++){
+        cout<<"iterazione "<<j<<endl;
+
+        //cout<<"update"<<endl;
+
+        A.update();
+        A.print();
+        cout<<endl;
     }
+    //cout<<"iterazione "<<N<<endl;
+    A.print();
+    cout<<endl;*/
 
     return 0;
 }
-

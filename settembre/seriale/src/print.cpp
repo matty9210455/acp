@@ -6,26 +6,34 @@
 using namespace std;
 
 void matrix::print(){
-    auto p=data.begin();
-    //cout<<"numero di righe "<<N_row<<" numero di colonne "<<N_col<<" numero di elementi "<<data.size()<<endl;
-    for (auto i=0; i<N_row;i++){
-        for(auto j=0; j<N_col-1;j++){
-            if(p->row==i && p->col==j){
-                cout<<p->car<<",";
-                p++;
+    auto fine_righe=data.end();
+    for(size_t i=0;i<N_row;i++){
+        auto aux_row=data.find(i);
+        if(aux_row!=fine_righe){
+            auto fine_col=data[i].end();
+            for(size_t j=0;j<N_col-1;j++){
+                auto aux_col=data[i].find(j);
+                if(aux_col!=fine_col){
+                    cout<<aux_col->second<<",";
+                }else{
+                cout<<0<<",";
+                }
+            }
+            auto aux_col=data[i].find(N_col-1);
+            if(aux_col!=fine_col){
+                cout<<aux_col->second<<endl;
             }else{
+            cout<<0<<endl;
+            }
+        }else{
+            for(size_t j=0;j<N_col-1;j++){
                 cout<<0<<",";
             }
-        }
-        if(p->row==i && p->col==N_col-1){
-            cout<<p->car<<endl;
-            p++;
-        }else{
             cout<<0<<endl;
         }
     }
+    cout<<endl;
 }
-
 
 
 void matrix::print(int iteration){
@@ -41,19 +49,29 @@ void matrix::print(int iteration){
         out.open(output,ios::trunc);
         auto p=data.begin();
 
-        for (auto i=0; i<N_row;i++){
-            for(auto j=0; j<N_col-1;j++){
-                if(p->row==i && p->col==j){
-                    out<<p->car<<",";
-                    p++;
+        auto fine_righe=data.end();
+        for(size_t i=0;i<N_row;i++){
+            auto aux_row=data.find(i);
+            if(aux_row!=fine_righe){
+                auto fine_col=data[i].end();
+                for(size_t j=0;j<N_col-1;j++){
+                    auto aux_col=data[i].find(j);
+                    if(aux_col!=fine_col){
+                        out<<aux_col->second<<",";
+                    }else{
+                    out<<0<<",";
+                    }
+                }
+                auto aux_col=data[i].find(N_col-1);
+                if(aux_col!=fine_col){
+                    out<<aux_col->second<<endl;
                 }else{
+                out<<0<<endl;
+                }
+            }else{
+                for(size_t j=0;j<N_col-1;j++){
                     out<<0<<",";
                 }
-            }
-            if(p->row==i && p->col==N_col-1){
-                out<<p->car<<endl;
-                p++;
-            }else{
                 out<<0<<endl;
             }
         }
