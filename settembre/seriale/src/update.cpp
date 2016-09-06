@@ -8,11 +8,15 @@ void matrix::update(int N_iter){
         vector<point_to_erase> erase;
         vector<point> add;
         auto last_row=data.end();
+        auto next_row=data.begin();
         if(move_blue){
-            for(auto it_row=data.begin();it_row!=last_row;it_row++){
-                auto next_row=data.find(it_row->first+1);
+            for(auto it_row=data.begin(); it_row!=last_row; it_row++){
+                /*auto next_row=data.find(it_row->first+1);
                 if(it_row->first==N_row-1) {next_row=data.find(0);}
-                if(next_row!=last_row){
+                if(next_row!=last_row)*/
+                next_row++;
+                if(it_row->first==N_row-1){next_row=data.begin();}
+                    if( (it_row->first+1==next_row->first || (it_row->first==N_row-1 && next_row->first==0) ) && next_row!=last_row){
                     auto last_point=it_row->second.end();
                     auto last_nextRow_point=next_row->second.end();
                     for(auto it=it_row->second.begin();it!=last_point;it++){
