@@ -1,5 +1,6 @@
 #include<classi.hpp>
 #include<vector>
+#include<iostream>
 
 using namespace std;
 

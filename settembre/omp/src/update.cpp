@@ -120,6 +120,15 @@ void matrix::update(int N_iter){
         for(size_t i_add=0;i_add<N_change;i_add++){
             data[addPrincipal[i_add].row][addPrincipal[i_add].col]=addPrincipal[i_add].car;
         }
-
+        auto it_row=data.begin();
+        while (it_row!=last_row) {
+            if(it_row->second.size ()==0){
+                auto aux=it_row;
+                it_row++;
+                data.erase(aux);
+            }else{
+                it_row++;
+            }
+        }
     }
 }
