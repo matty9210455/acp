@@ -8,6 +8,8 @@
 using namespace std;
 
 int main(){
+    stopwatch sw;
+    sw.start();
     matrix A("problem.csv");
 
     vector<int> iteration;
@@ -41,7 +43,8 @@ int main(){
         old=iteration[i];
     }
     
-
+    sw.stop();
+    cout<<"tempo impiegato "<<sw.elapsed_ms()<<endl;
     return 0;
 }
 
